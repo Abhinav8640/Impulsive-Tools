@@ -1,0 +1,30 @@
+{% extends "tools/base.html" %}
+{% block nav_about %}active{% endblock %}
+{% block title %}About — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">About</span>
+    <h1>Why this exists</h1>
+    <p>{{ site_tagline }}</p>
+  </div>
+</div>
+
+<div class="container section prose" style="padding-top:0;">
+  <h2>The short version</h2>
+  <p>I kept needing small, boring things done — merge a couple of PDFs, throw together a QR code, work out a CGPA before results day — and every site that did it buried the actual tool behind three ad banners and a sign-up wall. So I started building my own, one tool at a time, and {{ site_name }} is where they all live now.</p>
+
+  <h2>How it's organized</h2>
+  <p>Everything sits in one of six workspaces — PDF, Student, Social Media, Security, Resume, and QR & Barcode. No search-and-hope; pick a workspace and everything in it is relevant to what you're doing.</p>
+
+  <h2>What's actually live</h2>
+  <p>Most tools here run for real — merging PDFs, generating QR codes, scoring a resume, all of it. A few of the heavier ones (converting PDFs to Word or PowerPoint, OCR) are marked "Coming Soon" because they need a proper conversion engine behind them, not because I forgot about them. They're on the list.</p>
+
+  <h2>Who's behind it</h2>
+  <p><strong>{{ site_developer }}</strong> — building and maintaining this as an ongoing project, not a "launch and abandon" thing. Progress lives on <a href="{{ site_github }}" target="_blank" rel="noopener">GitHub</a>, and I'm around on <a href="{{ site_linkedin }}" target="_blank" rel="noopener">LinkedIn</a> if you want to say hi.</p>
+
+  <h2>Found something broken?</h2>
+  <p>Tell me. Head to the <a href="{% url 'tools:contact' %}">Contact page</a> or email <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a> directly — no ticket system, just a real inbox.</p>
+</div>
+{% endblock %}

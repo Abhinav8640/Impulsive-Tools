@@ -1,0 +1,40 @@
+{% extends "tools/base.html" %}
+{% block title %}Search{% if query %}: {{ query }}{% endif %} — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">Search</span>
+    <h1>{% if query %}Results for "{{ query }}"{% else %}Search tools{% endif %}</h1>
+    <form class="search-bar" action="{% url 'tools:search' %}" method="get" data-search-form style="margin-top:20px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <input type="search" name="q" value="{{ query }}" placeholder="Search for a tool..." autocomplete="off">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  {% if query %}
+    {% if results %}
+      <p class="muted" style="margin-bottom:24px;">{{ results|length }} tool{{ results|length|pluralize }} found.</p>
+      <div class="grid grid-4">
+        {% for tool in results %}
+        <a href="{% url 'tools:tool_detail' tool.slug %}" class="tool-card">
+          <div class="tool-card-top">
+            <div class="icon">{{ tool.icon }}</div>
+            {% if tool.status == 'live' %}<span class="badge badge-live">Live</span>{% else %}<span class="badge badge-soon">Soon</span>{% endif %}
+          </div>
+          <h4>{{ tool.name }}</h4>
+          <p>{{ tool.description }}</p>
+        </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No tools matched "{{ query }}". Try browsing <a href="{% url 'tools:category_list' %}">all categories</a> instead.</p>
+    {% endif %}
+  {% else %}
+    <p>Type something above to search across every tool.</p>
+  {% endif %}
+</div>
+{% endblock %}

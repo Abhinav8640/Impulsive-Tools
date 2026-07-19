@@ -1,0 +1,35 @@
+{% extends "tools/base.html" %}
+{% block title %}Terms &amp; Conditions — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms &amp; Conditions</h1>
+    <p>Last updated: January 2026</p>
+  </div>
+</div>
+
+<div class="container section prose" style="padding-top:0;">
+  <h2>1. Acceptance of terms</h2>
+  <p>By using {{ site_name }}, you agree to these Terms &amp; Conditions. If you don't agree, please don't use the site.</p>
+
+  <h2>2. Use of tools</h2>
+  <p>Tools are provided "as is" for personal and professional convenience. You're responsible for making sure you have the right to process any file you upload (e.g. copyright, confidentiality).</p>
+
+  <h2>3. No warranty</h2>
+  <p>We make reasonable efforts to keep tools accurate and available, but we don't guarantee uninterrupted access or error-free results. Some tools are marked "Coming Soon" and are not yet functional.</p>
+
+  <h2>4. Acceptable use</h2>
+  <p>You agree not to use the site to process illegal content, attempt to disrupt the service, or misuse any tool for harmful purposes.</p>
+
+  <h2>5. Limitation of liability</h2>
+  <p>{{ site_name }} and {{ site_developer }} are not liable for any indirect or consequential loss arising from use of the site or its tools.</p>
+
+  <h2>6. Changes</h2>
+  <p>These terms may be updated periodically. Continued use after changes means you accept the revised terms.</p>
+
+  <h2>7. Contact</h2>
+  <p>Questions about these terms can be sent to <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "tools/base.html" %}
+{% block nav_categories %}active{% endblock %}
+{% block title %}{{ category.name }} — {{ site_name }}{% endblock %}
+{% block meta_description %}{{ category.description }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumbs">
+      <a href="{% url 'tools:home' %}">Home</a><span class="sep">/</span>
+      <a href="{% url 'tools:category_list' %}">Categories</a><span class="sep">/</span>
+      <span>{{ category.name }}</span>
+    </div>
+    <span class="eyebrow">{{ category.icon }} Category</span>
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+  </div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  <div class="grid grid-4">
+    {% for tool in tools %}
+    <a href="{% url 'tools:tool_detail' tool.slug %}" class="tool-card reveal">
+      <div class="tool-card-top">
+        <div class="icon">{{ tool.icon }}</div>
+        {% if tool.status == 'live' %}<span class="badge badge-live">Live</span>{% else %}<span class="badge badge-soon">Soon</span>{% endif %}
+      </div>
+      <h4>{{ tool.name }}</h4>
+      <p>{{ tool.description }}</p>
+    </a>
+    {% empty %}
+    <p>No tools in this category yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

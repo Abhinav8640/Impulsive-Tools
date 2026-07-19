@@ -1,0 +1,39 @@
+<div id="cc-app">
+  <div class="field">
+    <label for="cc-text">Your text</label>
+    <textarea id="cc-text" rows="8" placeholder="Start typing or paste your text here..."></textarea>
+  </div>
+  <div class="grid grid-3" style="margin-top:20px;">
+    <div class="feature-card" style="padding:16px; text-align:center;">
+      <div style="font-family:var(--font-mono); font-size:1.4rem;" id="cc-chars">0</div>
+      <div class="muted" style="font-size:0.78rem;">Characters</div>
+    </div>
+    <div class="feature-card" style="padding:16px; text-align:center;">
+      <div style="font-family:var(--font-mono); font-size:1.4rem;" id="cc-words">0</div>
+      <div class="muted" style="font-size:0.78rem;">Words</div>
+    </div>
+    <div class="feature-card" style="padding:16px; text-align:center;">
+      <div style="font-family:var(--font-mono); font-size:1.4rem;" id="cc-sentences">0</div>
+      <div class="muted" style="font-size:0.78rem;">Sentences</div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var textEl = document.getElementById('cc-text');
+  var chars = document.getElementById('cc-chars');
+  var words = document.getElementById('cc-words');
+  var sentences = document.getElementById('cc-sentences');
+
+  function recalc() {
+    var v = textEl.value;
+    chars.textContent = v.length;
+    var w = v.trim().length ? v.trim().split(/\s+/).length : 0;
+    words.textContent = w;
+    var s = v.split(/[.!?]+/).filter(function (x) { return x.trim().length > 0; }).length;
+    sentences.textContent = s;
+  }
+  textEl.addEventListener('input', recalc);
+  recalc();
+})();
+</script>

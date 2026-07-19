@@ -1,0 +1,55 @@
+<div id="att-app">
+  <div class="field">
+    <label for="att-attended">Classes attended</label>
+    <input type="number" id="att-attended" placeholder="e.g. 42">
+  </div>
+  <div class="field">
+    <label for="att-total">Total classes held</label>
+    <input type="number" id="att-total" placeholder="e.g. 50">
+  </div>
+  <div class="field">
+    <label for="att-target">Required attendance %</label>
+    <input type="number" id="att-target" placeholder="75" value="75">
+  </div>
+  <div class="result-panel" style="margin-top:0;">
+    <div class="alert alert-success">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span>Current attendance</span>
+        <strong id="att-result" style="font-family:var(--font-mono); font-size:1.2rem;">0.00%</strong>
+      </div>
+    </div>
+    <p id="att-note" class="muted" style="font-size:0.86rem;"></p>
+  </div>
+</div>
+<script>
+(function () {
+  var attended = document.getElementById('att-attended');
+  var total = document.getElementById('att-total');
+  var target = document.getElementById('att-target');
+  var result = document.getElementById('att-result');
+  var note = document.getElementById('att-note');
+
+  function recalc() {
+    var a = parseFloat(attended.value) || 0;
+    var t = parseFloat(total.value) || 0;
+    var goal = parseFloat(target.value) || 75;
+    var pct = t > 0 ? (a / t) * 100 : 0;
+    result.textContent = pct.toFixed(2) + '%';
+
+    if (t === 0) { note.textContent = ''; return; }
+
+    if (pct >= goal) {
+      // how many more classes can be skipped and stay >= goal
+      var skip = 0;
+      while (t > 0 && ((a / (t + skip + 1)) * 100) >= goal) { skip++; if (skip > 1000) break; }
+      note.textContent = 'You can miss ' + skip + ' more class' + (skip === 1 ? '' : 'es') + ' and stay at or above ' + goal + '%.';
+    } else {
+      var need = 0, a2 = a, t2 = t;
+      while (((a2 / t2) * 100) < goal && need < 1000) { a2++; t2++; need++; }
+      note.textContent = 'You need to attend the next ' + need + ' class' + (need === 1 ? '' : 'es') + ' in a row to reach ' + goal + '%.';
+    }
+  }
+  [attended, total, target].forEach(function (el) { el.addEventListener('input', recalc); });
+  recalc();
+})();
+</script>

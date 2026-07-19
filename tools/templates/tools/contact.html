@@ -1,0 +1,52 @@
+{% extends "tools/base.html" %}
+{% block nav_contact %}active{% endblock %}
+{% block title %}Contact — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1>Talk to the guy who built it</h1>
+    <p>No contact forms, no ticket queue. Just reach out directly — I actually read these.</p>
+  </div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  <div class="contact-direct">
+    <a href="mailto:{{ site_contact_email }}" class="contact-tile">
+      <div class="contact-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18v12H3z" stroke-linejoin="round"/><path d="m3 7 9 6 9-6" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="contact-tile-body">
+        <span class="contact-tile-label">Email</span>
+        <span class="contact-tile-value">{{ site_contact_email }}</span>
+      </div>
+      <span class="contact-tile-arrow">↗</span>
+    </a>
+
+    <a href="{{ site_github }}" target="_blank" rel="noopener" class="contact-tile">
+      <div class="contact-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.1c-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.08.78 2.17v3.21c0 .31.2.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+      </div>
+      <div class="contact-tile-body">
+        <span class="contact-tile-label">GitHub</span>
+        <span class="contact-tile-value">Abhinav8640</span>
+      </div>
+      <span class="contact-tile-arrow">↗</span>
+    </a>
+
+    <a href="{{ site_linkedin }}" target="_blank" rel="noopener" class="contact-tile">
+      <div class="contact-tile-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+      </div>
+      <div class="contact-tile-body">
+        <span class="contact-tile-label">LinkedIn</span>
+        <span class="contact-tile-value">Abhinav Tripathi</span>
+      </div>
+      <span class="contact-tile-arrow">↗</span>
+    </a>
+  </div>
+
+  <p class="text-center muted" style="margin-top:32px; font-size:0.86rem;">Bug report, tool request, or just want to say the merge PDF tool saved your evening — any of that's a good reason to write in.</p>
+</div>
+{% endblock %}

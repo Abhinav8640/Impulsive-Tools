@@ -1,0 +1,16 @@
+{% extends "tools/base.html" %}
+{% block title %}Page Not Found — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="error-page">
+    <div class="code">404</div>
+    <h2>This page wandered off.</h2>
+    <p class="muted" style="max-width:420px; margin-bottom:28px;">The page you're looking for doesn't exist or may have moved. Try heading back home or browsing the tools.</p>
+    <div style="display:flex; gap:12px;">
+      <a href="{% url 'tools:home' %}" class="btn btn-primary">Go home</a>
+      <a href="{% url 'tools:category_list' %}" class="btn btn-outline">Browse tools</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

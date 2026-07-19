@@ -1,0 +1,26 @@
+{% extends "tools/base.html" %}
+{% block nav_categories %}active{% endblock %}
+{% block title %}All Categories — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">Categories</span>
+    <h1>Every tool, organized</h1>
+    <p>Pick a workspace to see the full set of tools inside it.</p>
+  </div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  <div class="grid grid-3">
+    {% for cat in categories %}
+    <a href="{% url 'tools:category_detail' cat.slug %}" class="category-card hardware reveal">
+      <div class="icon">{{ cat.icon }}</div>
+      <h3>{{ cat.name }}</h3>
+      <p>{{ cat.description }}</p>
+      <span class="count">Explore category →</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

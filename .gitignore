@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+db.sqlite3
+venv/
+.venv/
+*.egg-info/
+media/uploads/*
+media/outputs/*
+!media/uploads/.gitkeep
+!media/outputs/.gitkeep
+.DS_Store
+staticfiles/

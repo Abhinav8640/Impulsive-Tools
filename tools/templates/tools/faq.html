@@ -1,0 +1,24 @@
+{% extends "tools/base.html" %}
+{% block nav_faq %}active{% endblock %}
+{% block title %}FAQ — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h1>Frequently asked questions</h1>
+    <p>Everything you need to know about using {{ site_name }}.</p>
+  </div>
+</div>
+
+<div class="container section" style="padding-top:0;">
+  <div class="faq-list" style="max-width:780px;">
+    {% for q, a in faq_items %}
+    <div class="faq-item">
+      <button class="faq-question">{{ q }}<span class="plus">+</span></button>
+      <div class="faq-answer"><p>{{ a }}</p></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

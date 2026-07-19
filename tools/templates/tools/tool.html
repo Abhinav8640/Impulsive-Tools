@@ -1,0 +1,120 @@
+{% extends "tools/base.html" %}
+{% load static %}
+{% block title %}{{ tool.name }} — {{ site_name }}{% endblock %}
+{% block meta_description %}{{ tool.description }}{% endblock %}
+
+{% block content %}
+<div class="container section">
+  <div class="breadcrumbs">
+    <a href="{% url 'tools:home' %}">Home</a><span class="sep">/</span>
+    <a href="{% url 'tools:category_detail' category.slug %}">{{ category.name }}</a><span class="sep">/</span>
+    <span>{{ tool.name }}</span>
+  </div>
+
+  <div class="tool-header">
+    <div class="icon">{{ tool.icon }}</div>
+    <div>
+      <h1>{{ tool.name }}</h1>
+      <div class="tool-meta">
+        {% if tool.status == 'live' %}<span class="badge badge-live">Live</span>{% else %}<span class="badge badge-soon">Coming soon</span>{% endif %}
+        <span class="muted" style="font-size:0.85rem;">{{ tool.description }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-layout">
+    <div class="tool-panel hardware">
+
+      {% if tool.status != 'live' %}
+        <div class="tool-panel-soon">
+          <div class="icon-lg">🛠️</div>
+          <h3>This tool is on the way</h3>
+          <p>{{ tool.name }} needs a heavier conversion engine and isn't wired up in this build yet. It has a permanent home here in {{ category.name }} and will go live as it's built out.</p>
+          <a href="{% url 'tools:category_detail' category.slug %}" class="btn btn-outline">Back to {{ category.name }}</a>
+        </div>
+
+      {% elif tool.kind == 'client' %}
+        {% include "tools/client_widgets/"|add:tool.slug|add:".html" %}
+
+      {% else %}
+        <form class="tool-form" method="post" enctype="multipart/form-data" action="{% url 'tools:tool_detail' tool.slug %}">
+          {% csrf_token %}
+
+          {% for f in fields %}
+          <div class="field">
+            {% if f.type == 'checkbox' %}
+              <div class="checkbox-row">
+                <input type="checkbox" id="fld-{{ f.name }}" name="{{ f.name }}" {% if f.default %}checked{% endif %}>
+                <label for="fld-{{ f.name }}" style="margin:0;">{{ f.label }}</label>
+              </div>
+
+            {% elif f.type == 'select' %}
+              <label for="fld-{{ f.name }}">{{ f.label }}</label>
+              <select id="fld-{{ f.name }}" name="{{ f.name }}" {{ f.attrs }}>
+                {% for value, label in f.options %}
+                <option value="{{ value }}" {% if value == f.default %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+
+            {% elif f.type == 'textarea' %}
+              <label for="fld-{{ f.name }}">{{ f.label }}</label>
+              <textarea id="fld-{{ f.name }}" name="{{ f.name }}" placeholder="{{ f.placeholder }}" {% if f.required %}required{% endif %}></textarea>
+
+            {% elif f.type == 'file' %}
+              <label>{{ f.label }}</label>
+              <div class="dropzone">
+                <div class="dz-icon">📤</div>
+                <div class="dz-title">Click or drag {% if f.multiple %}files{% else %}a file{% endif %} here</div>
+                <div class="dz-hint">{{ f.hint|default:"Processed instantly, not stored." }}</div>
+                <input type="file" name="{{ f.name }}" accept="{{ f.accept }}" {% if f.multiple %}multiple{% endif %} {% if f.required %}required{% endif %}>
+              </div>
+              <ul class="file-list"></ul>
+
+            {% else %}
+              <label for="fld-{{ f.name }}">{{ f.label }}</label>
+              <input type="{{ f.type }}" id="fld-{{ f.name }}" name="{{ f.name }}"
+                     placeholder="{{ f.placeholder }}" value="{{ f.default|default:'' }}"
+                     {% if f.required %}required{% endif %} {{ f.attrs }}>
+            {% endif %}
+
+            {% if f.hint and f.type != 'file' %}<div class="field-hint">{{ f.hint }}</div>{% endif %}
+          </div>
+          {% endfor %}
+
+          <div id="upload-progress"><div class="bar"></div></div>
+
+          <button type="submit" class="btn btn-primary btn-block" data-label="Run {{ tool.name }}">
+            <span class="btn-label">Run {{ tool.name }}</span>
+          </button>
+        </form>
+
+        <div id="tool-result-container">
+          {% include "tools/partials/result.html" %}
+        </div>
+      {% endif %}
+    </div>
+
+    <aside>
+      <div class="sidebar-box hardware">
+        <h4>About this tool</h4>
+        <p class="muted" style="font-size:0.86rem;">{{ tool.description }} Part of the {{ category.name }} workspace on {{ site_name }}.</p>
+      </div>
+      {% if related_tools %}
+      <div class="sidebar-box hardware">
+        <h4>Related tools</h4>
+        <ul>
+          {% for rt in related_tools %}
+          <li><a href="{% url 'tools:tool_detail' rt.slug %}">{{ rt.icon }} {{ rt.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      <div class="sidebar-box hardware">
+        <h4>{{ category.icon }} {{ category.name }}</h4>
+        <p class="muted" style="font-size:0.86rem; margin-bottom:14px;">{{ category.description }}</p>
+        <a href="{% url 'tools:category_detail' category.slug %}" class="btn btn-outline btn-block">View all</a>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

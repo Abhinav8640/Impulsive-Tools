@@ -1,0 +1,137 @@
+{% extends "tools/base.html" %}
+{% load static %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow"><span class="loading-dot"></span> No sign-up, no paywall, no nonsense</span>
+    <h1>Stop hunting for<br>a tool that just <span class="accent">works.</span></h1>
+    <p class="hero-sub">I got tired of clicking through five ad-choked sites to merge a PDF or make a QR code, so I built one workbench that just does the job. PDF tools, student calculators, social generators, security utilities, QR & barcode — pick one up and use it.</p>
+
+    <form class="search-bar" action="{% url 'tools:search' %}" method="get" data-search-form>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+      <input type="search" name="q" placeholder="Search for a tool — try &quot;merge pdf&quot; or &quot;qr code&quot;" autocomplete="off">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div class="hero-tags">
+      {% for cat in categories %}
+      <span class="hero-tag">{{ cat.icon }} <strong>{{ cat.name }}</strong></span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% comment %} <div class="stripe-divider"></div> {% endcomment %}
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Grab these first</span>
+        <h2>The tools people actually reach for</h2>
+      </div>
+      <a class="see-all" href="{% url 'tools:category_list' %}">Browse all categories →</a>
+    </div>
+    <div class="grid grid-4">
+      {% for tool in popular_tools %}
+      <a href="{% url 'tools:tool_detail' tool.slug %}" class="tool-card">
+        <div class="tool-card-top">
+          <div class="icon">{{ tool.icon }}</div>
+          {% if tool.status == 'live' %}<span class="badge badge-live">Live</span>{% else %}<span class="badge badge-soon">Soon</span>{% endif %}
+        </div>
+        <h4>{{ tool.name }}</h4>
+        <p>{{ tool.description }}</p>
+        <span class="cat-tag">{{ tool.category|upper }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section pegboard reveal" style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The full board</span>
+        <h2>Six workspaces, everything sorted</h2>
+        <p>No endless scroll of unrelated tools — pick your workspace and everything in it is relevant.</p>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      {% for cat in categories %}
+      <a href="{% url 'tools:category_detail' cat.slug %}" class="category-card hardware">
+        <div class="icon">{{ cat.icon }}</div>
+        <h3>{{ cat.name }}</h3>
+        <p>{{ cat.description }}</p>
+        <span class="count">Explore category →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Just shipped</span>
+        <h2>Newest additions to the board</h2>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      {% for tool in recent_tools %}
+      <a href="{% url 'tools:tool_detail' tool.slug %}" class="tool-card">
+        <div class="tool-card-top">
+          <div class="icon">{{ tool.icon }}</div>
+          {% if tool.status == 'live' %}<span class="badge badge-live">Live</span>{% else %}<span class="badge badge-soon">Soon</span>{% endif %}
+        </div>
+        <h4>{{ tool.name }}</h4>
+        <p>{{ tool.description }}</p>
+        <span class="cat-tag">{{ tool.category|upper }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section pegboard reveal" style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The pitch</span>
+        <h2>Why this instead of another tools site</h2>
+      </div>
+    </div>
+    <div class="grid grid-4">
+      <div class="feature-card hardware"><div class="icon">⚡</div><h4>No queue, no wait</h4><p>Most tools run in-browser or in-memory. You click, it's done — no "processing, check back in 5 minutes."</p></div>
+      <div class="feature-card hardware"><div class="icon">🔒</div><h4>Your files aren't the product</h4><p>Whatever you upload is used to build your result and nothing else. It isn't kept, sold, or scanned for training data.</p></div>
+      <div class="feature-card hardware"><div class="icon">🆓</div><h4>Free means free</h4><p>No "3 free uses then pay." No watermark stamped on your output. Full stop.</p></div>
+      <div class="feature-card hardware"><div class="icon">📱</div><h4>Works from your phone</h4><p>Built responsive from day one — merge a PDF from your couch, no desktop required.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Before you ask</span>
+        <h2>Frequently asked</h2>
+      </div>
+      <a class="see-all" href="{% url 'tools:faq' %}">View full FAQ →</a>
+    </div>
+    <div class="faq-list" style="max-width:780px;">
+      {% for q, a in faq_preview %}
+      <div class="faq-item">
+        <button class="faq-question">{{ q }}<span class="plus">+</span></button>
+        <div class="faq-answer"><p>{{ a }}</p></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

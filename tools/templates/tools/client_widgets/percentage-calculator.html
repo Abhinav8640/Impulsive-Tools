@@ -1,0 +1,30 @@
+<div id="pct-app">
+  <div class="field">
+    <label for="pct-obtained">Marks obtained</label>
+    <input type="number" id="pct-obtained" placeholder="e.g. 450">
+  </div>
+  <div class="field">
+    <label for="pct-total">Total marks</label>
+    <input type="number" id="pct-total" placeholder="e.g. 500">
+  </div>
+  <div class="result-panel" style="margin-top:0;">
+    <div class="alert alert-success" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>Percentage</span>
+      <strong id="pct-result" style="font-family:var(--font-mono); font-size:1.2rem;">0.00%</strong>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var obtained = document.getElementById('pct-obtained');
+  var total = document.getElementById('pct-total');
+  var result = document.getElementById('pct-result');
+  function recalc() {
+    var o = parseFloat(obtained.value) || 0;
+    var t = parseFloat(total.value) || 0;
+    result.textContent = t > 0 ? ((o / t) * 100).toFixed(2) + '%' : '0.00%';
+  }
+  obtained.addEventListener('input', recalc);
+  total.addEventListener('input', recalc);
+})();
+</script>

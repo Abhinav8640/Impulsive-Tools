@@ -1,0 +1,29 @@
+{% if result %}
+  {% if result.ok %}
+    <div class="result-panel">
+      <div class="alert alert-success">{{ result.message|default:"Done." }}</div>
+
+      {% if result.text_result %}
+        <div class="result-text-box" id="result-text">{{ result.text_result }}</div>
+        <div class="result-actions">
+          <button type="button" class="btn btn-outline copy-btn" data-copy-target="result-text"><span class="btn-label">Copy result</span></button>
+        </div>
+      {% endif %}
+
+      {% if download_uri %}
+        {% if result.preview_data_uri %}
+        <div class="result-preview" style="margin-top:14px;">
+          <img src="{{ result.preview_data_uri }}" alt="Result preview">
+        </div>
+        {% endif %}
+        <div class="result-actions">
+          <a class="btn btn-primary" href="{{ download_uri }}" download="{{ result.file_name }}">⬇ Download {{ result.file_name }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="result-panel">
+      <div class="alert alert-error">{{ result.message }}</div>
+    </div>
+  {% endif %}
+{% endif %}

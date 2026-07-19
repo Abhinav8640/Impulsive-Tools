@@ -1,0 +1,141 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.breadcrumbs a:hover { color: var(--accent-hover); }
+.breadcrumbs .sep { opacity: 0.5; }
+
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 36px;
+}
+.tool-header .icon {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: rgba(225,29,46,0.14);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem;
+  flex-shrink: 0;
+}
+.tool-header h1 { font-size: 1.7rem; margin-bottom: 6px; }
+.tool-header .tool-meta { display: flex; align-items: center; gap: 12px; }
+
+.tool-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.tool-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.tool-panel-soon {
+  text-align: center;
+  padding: 60px 32px;
+}
+.tool-panel-soon .icon-lg { font-size: 2.6rem; margin-bottom: 18px; }
+
+/* Drag & drop upload ---------------------------------------------------*/
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  margin-bottom: 8px;
+}
+.dropzone.dragover { border-color: var(--accent-hover); background: rgba(225,29,46,0.08); }
+.dropzone .dz-icon { font-size: 2rem; margin-bottom: 10px; }
+.dropzone .dz-title { font-weight: 600; margin-bottom: 4px; }
+.dropzone .dz-hint { font-size: 0.8rem; color: var(--text-muted); }
+.dropzone input[type="file"] { display: none; }
+
+.file-list { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.file-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+.file-list .file-remove { color: var(--error); cursor: pointer; font-weight: 700; background:none; border:none; }
+
+#upload-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--bg);
+  overflow: hidden;
+  margin-top: 14px;
+  display: none;
+}
+#upload-progress .bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  transition: width 150ms ease;
+}
+
+/* Result panel -----------------------------------------------------------*/
+.result-panel { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--border); }
+.result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.result-preview img { max-width: 260px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.result-text-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 340px;
+  overflow-y: auto;
+}
+.copy-btn { position: relative; }
+.copy-btn.copied::after {
+  content: 'Copied!';
+  position: absolute;
+  top: -30px; left: 50%; transform: translateX(-50%);
+  background: var(--success);
+  color: #08210f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* Sidebar ----------------------------------------------------------------*/
+.sidebar-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.sidebar-box h4 { font-size: 0.9rem; margin-bottom: 12px; }
+.sidebar-box ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-box li a {
+  font-size: 0.85rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px;
+  transition: color var(--transition);
+}
+.sidebar-box li a:hover { color: var(--accent-hover); }
+
+@media (max-width: 900px) {
+  .tool-layout { grid-template-columns: 1fr; }
+}

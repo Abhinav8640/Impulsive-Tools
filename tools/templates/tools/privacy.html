@@ -1,0 +1,38 @@
+{% extends "tools/base.html" %}
+{% block title %}Privacy Policy — {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container">
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: January 2026</p>
+  </div>
+</div>
+
+<div class="container section prose" style="padding-top:0;">
+  <h2>1. Overview</h2>
+  <p>This Privacy Policy explains how {{ site_name }} ("we", "us") handles information when you use our website and tools.</p>
+
+  <h2>2. Files you upload</h2>
+  <p>Files uploaded to a tool (e.g. a PDF to merge, or a resume to score) are processed in memory to generate your result. We do not retain a permanent copy of uploaded files or generated outputs beyond what's needed to serve the response.</p>
+
+  <h2>3. Information we collect</h2>
+  <p>We may collect basic, non-identifying usage data (such as pages visited and tool usage counts) to understand how the site is used and to improve it. Contact form submissions include the name, email, and message you provide.</p>
+
+  <h2>4. Cookies</h2>
+  <p>The site may use essential cookies required for basic functionality (such as CSRF protection). We do not use cookies for third-party advertising.</p>
+
+  <h2>5. Third-party services</h2>
+  <p>Some tools (e.g. the Thumbnail Downloader) fetch publicly available data from third-party services (e.g. YouTube) at your request. We are not responsible for those services' own privacy practices.</p>
+
+  <h2>6. Data security</h2>
+  <p>We take reasonable measures to protect information processed by the site, but no method of transmission or storage is 100% secure.</p>
+
+  <h2>7. Changes to this policy</h2>
+  <p>We may update this policy from time to time. Continued use of the site after changes means you accept the revised policy.</p>
+
+  <h2>8. Contact</h2>
+  <p>Questions about this policy can be sent to <a href="mailto:{{ site_contact_email }}">{{ site_contact_email }}</a>.</p>
+</div>
+{% endblock %}

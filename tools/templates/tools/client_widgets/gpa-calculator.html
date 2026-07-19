@@ -1,0 +1,46 @@
+<div id="gpa-app">
+  <p class="muted" style="font-size:0.86rem; margin-bottom:18px;">Add each course's grade points and credit hours. GPA = Σ(grade points × credits) ÷ Σ(credits).</p>
+  <div id="gpa-rows"></div>
+  <button type="button" id="gpa-add" class="btn btn-outline" style="margin-bottom:20px;">+ Add course</button>
+  <div class="result-panel" style="margin-top:0;">
+    <div class="alert alert-success" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>Your GPA</span>
+      <strong id="gpa-result" style="font-family:var(--font-mono); font-size:1.2rem;">0.00</strong>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var rows = document.getElementById('gpa-rows');
+  var resultEl = document.getElementById('gpa-result');
+
+  function recalc() {
+    var totalPoints = 0, totalCredits = 0;
+    rows.querySelectorAll('.gpa-row').forEach(function (row) {
+      var gp = parseFloat(row.querySelector('.gpa-points').value) || 0;
+      var cr = parseFloat(row.querySelector('.gpa-credits').value) || 0;
+      totalPoints += gp * cr;
+      totalCredits += cr;
+    });
+    resultEl.textContent = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
+  }
+
+  function addRow() {
+    var row = document.createElement('div');
+    row.className = 'gpa-row';
+    row.style.cssText = 'display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:10px; margin-bottom:10px; align-items:center;';
+    row.innerHTML =
+      '<input type="text" placeholder="Course name" class="gpa-name">' +
+      '<input type="number" step="0.01" min="0" max="10" placeholder="Grade pts" class="gpa-points">' +
+      '<input type="number" step="0.5" min="0" placeholder="Credits" class="gpa-credits">' +
+      '<button type="button" class="file-remove" style="font-size:1.2rem;">✕</button>';
+    row.querySelector('.gpa-points').addEventListener('input', recalc);
+    row.querySelector('.gpa-credits').addEventListener('input', recalc);
+    row.querySelector('.file-remove').addEventListener('click', function () { row.remove(); recalc(); });
+    rows.appendChild(row);
+  }
+
+  document.getElementById('gpa-add').addEventListener('click', addRow);
+  addRow(); addRow(); addRow();
+})();
+</script>

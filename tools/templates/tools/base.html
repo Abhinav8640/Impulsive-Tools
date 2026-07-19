@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ site_name }} — Fast, Free Online Tools{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{{ site_tagline }}{% endblock %}">
+
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'tools/img/favicon-32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'tools/img/favicon-16.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'tools/img/favicon-180.png' %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'tools/css/style.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'tools/css/navbar.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'tools/css/footer.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'tools/css/cards.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'tools/css/tool.css' %}?v=3">
+<link rel="stylesheet" href="{% static 'tools/css/responsive.css' %}?v=3">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="{% url 'tools:home' %}" class="brand">
+      <img src="{% static 'tools/img/logo_icon.png' %}" alt="{{ site_name }} logo">
+      <span>{{ site_name }}</span>
+    </a>
+
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'tools:home' %}" class="{% block nav_home %}{% endblock %}">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="{% url 'tools:category_list' %}" class="nav-dropdown-trigger {% block nav_categories %}{% endblock %}">Categories</a>
+          <div class="nav-dropdown-panel">
+            {% for cat in nav_categories %}
+            <a class="nav-dropdown-item" href="{% url 'tools:category_detail' cat.slug %}">
+              <span>{{ cat.icon }}</span>
+              <span>{{ cat.name }}</span>
+              <span class="count">{{ cat.count }}</span>
+            </a>
+            {% endfor %}
+          </div>
+        </li>
+        <li><a href="{% url 'tools:about' %}" class="{% block nav_about %}{% endblock %}">About</a></li>
+        <li><a href="{% url 'tools:faq' %}" class="{% block nav_faq %}{% endblock %}">FAQ</a></li>
+        <li><a href="{% url 'tools:contact' %}" class="{% block nav_contact %}{% endblock %}">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="{% url 'tools:category_list' %}" class="btn btn-outline">Browse Tools</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="{% url 'tools:home' %}" class="brand">
+          <img src="{% static 'tools/img/logo_icon.png' %}" alt="{{ site_name }} logo">
+          <span>{{ site_name }}</span>
+        </a>
+        <p>{{ site_tagline }}</p>
+        <div class="social-row">
+          <a class="social-icon" href="{{ site_github }}" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.1c-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.08.78 2.17v3.21c0 .31.2.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+          </a>
+          <a class="social-icon" href="{{ site_linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+          </a>
+          <a class="social-icon" href="mailto:{{ site_contact_email }}" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18v12H3z" stroke-linejoin="round"/><path d="m3 7 9 6 9-6" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          {% for cat in nav_categories %}
+          <li><a href="{% url 'tools:category_detail' cat.slug %}">{{ cat.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="{% url 'tools:about' %}">About</a></li>
+          <li><a href="{% url 'tools:contact' %}">Contact</a></li>
+          <li><a href="{% url 'tools:faq' %}">FAQ</a></li>
+          <li><a href="{{ site_github }}" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="{% url 'tools:privacy' %}">Privacy Policy</a></li>
+          <li><a href="{% url 'tools:terms' %}">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>{{ site_name }} · Developed by <strong>{{ site_developer }}</strong> · All Rights Reserved © {{ current_year }}</span>
+      <div class="footer-bottom-links">
+        <a href="{% url 'tools:privacy' %}">Privacy Policy</a>
+        <a href="{% url 'tools:terms' %}">Terms &amp; Conditions</a>
+        <a href="{% url 'tools:contact' %}">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script src="{% static 'tools/js/main.js' %}?v=3"></script>
+<script src="{% static 'tools/js/navbar.js' %}?v=3"></script>
+<script src="{% static 'tools/js/search.js' %}?v=3"></script>
+<script src="{% static 'tools/js/upload.js' %}?v=3"></script>
+<script src="{% static 'tools/js/pdf.js' %}?v=3"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

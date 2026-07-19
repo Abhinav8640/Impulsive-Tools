@@ -1,0 +1,46 @@
+<div id="cgpa-app">
+  <p class="muted" style="font-size:0.86rem; margin-bottom:18px;">Add each semester's GPA and credit hours. CGPA = Σ(semester GPA × credits) ÷ Σ(credits).</p>
+  <div id="cgpa-rows"></div>
+  <button type="button" id="cgpa-add" class="btn btn-outline" style="margin-bottom:20px;">+ Add semester</button>
+  <div class="result-panel" style="margin-top:0;">
+    <div class="alert alert-success" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>Your CGPA</span>
+      <strong id="cgpa-result" style="font-family:var(--font-mono); font-size:1.2rem;">0.00</strong>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var rows = document.getElementById('cgpa-rows');
+  var resultEl = document.getElementById('cgpa-result');
+
+  function recalc() {
+    var totalPoints = 0, totalCredits = 0;
+    rows.querySelectorAll('.cgpa-row').forEach(function (row) {
+      var gp = parseFloat(row.querySelector('.cgpa-gpa').value) || 0;
+      var cr = parseFloat(row.querySelector('.cgpa-credits').value) || 0;
+      totalPoints += gp * cr;
+      totalCredits += cr;
+    });
+    resultEl.textContent = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
+  }
+
+  function addRow(n) {
+    var row = document.createElement('div');
+    row.className = 'cgpa-row';
+    row.style.cssText = 'display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:10px; margin-bottom:10px; align-items:center;';
+    row.innerHTML =
+      '<input type="text" placeholder="Semester ' + n + '" class="cgpa-name">' +
+      '<input type="number" step="0.01" min="0" max="10" placeholder="GPA" class="cgpa-gpa">' +
+      '<input type="number" step="0.5" min="0" placeholder="Credits" class="cgpa-credits">' +
+      '<button type="button" class="file-remove" style="font-size:1.2rem;">✕</button>';
+    row.querySelector('.cgpa-gpa').addEventListener('input', recalc);
+    row.querySelector('.cgpa-credits').addEventListener('input', recalc);
+    row.querySelector('.file-remove').addEventListener('click', function () { row.remove(); recalc(); });
+    rows.appendChild(row);
+  }
+
+  document.getElementById('cgpa-add').addEventListener('click', function () { addRow(rows.children.length + 1); });
+  addRow(1); addRow(2);
+})();
+</script>

@@ -1,0 +1,58 @@
+<div id="cite-app">
+  <div class="field">
+    <label for="cite-author">Author (Last, First)</label>
+    <input type="text" id="cite-author" placeholder="e.g. Tripathi, Abhinav">
+  </div>
+  <div class="field">
+    <label for="cite-title">Title</label>
+    <input type="text" id="cite-title" placeholder="Title of the work">
+  </div>
+  <div class="field">
+    <label for="cite-year">Year</label>
+    <input type="text" id="cite-year" placeholder="2026">
+  </div>
+  <div class="field">
+    <label for="cite-publisher">Publisher / Website</label>
+    <input type="text" id="cite-publisher" placeholder="e.g. Springer, or a site name">
+  </div>
+  <div class="field">
+    <label for="cite-url">URL (optional)</label>
+    <input type="url" id="cite-url" placeholder="https://...">
+  </div>
+
+  <div class="result-panel" style="margin-top:0;">
+    <label>APA</label>
+    <div class="result-text-box" id="cite-apa" style="margin-bottom:16px;">—</div>
+    <label>MLA</label>
+    <div class="result-text-box" id="cite-mla" style="margin-bottom:16px;">—</div>
+    <label>Chicago</label>
+    <div class="result-text-box" id="cite-chicago">—</div>
+  </div>
+</div>
+<script>
+(function () {
+  var author = document.getElementById('cite-author');
+  var title = document.getElementById('cite-title');
+  var year = document.getElementById('cite-year');
+  var publisher = document.getElementById('cite-publisher');
+  var url = document.getElementById('cite-url');
+
+  function build() {
+    var a = author.value.trim() || 'Author, A.';
+    var t = title.value.trim() || 'Title of work';
+    var y = year.value.trim() || 'n.d.';
+    var p = publisher.value.trim();
+    var u = url.value.trim();
+
+    var apa = a + ' (' + y + '). ' + t + '.' + (p ? ' ' + p + '.' : '') + (u ? ' ' + u : '');
+    var mla = a + ' "' + t + '." ' + (p ? p + ', ' : '') + y + '.' + (u ? ' ' + u + '.' : '');
+    var chicago = a + '. "' + t + '." ' + (p ? p + ', ' : '') + y + '.' + (u ? ' ' + u + '.' : '');
+
+    document.getElementById('cite-apa').textContent = apa;
+    document.getElementById('cite-mla').textContent = mla;
+    document.getElementById('cite-chicago').textContent = chicago;
+  }
+  [author, title, year, publisher, url].forEach(function (el) { el.addEventListener('input', build); });
+  build();
+})();
+</script>

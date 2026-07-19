@@ -1,0 +1,68 @@
+<div id="pomo-app" style="text-align:center;">
+  <div style="display:flex; justify-content:center; gap:10px; margin-bottom:24px;">
+    <button type="button" class="btn btn-outline pomo-mode active" data-mins="25">Focus 25m</button>
+    <button type="button" class="btn btn-outline pomo-mode" data-mins="5">Short break 5m</button>
+    <button type="button" class="btn btn-outline pomo-mode" data-mins="15">Long break 15m</button>
+  </div>
+  <div id="pomo-display" style="font-family:var(--font-display); font-size:4rem; font-weight:700; margin-bottom:24px;">25:00</div>
+  <div style="display:flex; justify-content:center; gap:12px;">
+    <button type="button" id="pomo-start" class="btn btn-primary">Start</button>
+    <button type="button" id="pomo-pause" class="btn btn-outline" disabled>Pause</button>
+    <button type="button" id="pomo-reset" class="btn btn-outline">Reset</button>
+  </div>
+  <p class="muted" style="font-size:0.82rem; margin-top:20px;">Sessions completed this visit: <strong id="pomo-count">0</strong></p>
+</div>
+<script>
+(function () {
+  var display = document.getElementById('pomo-display');
+  var startBtn = document.getElementById('pomo-start');
+  var pauseBtn = document.getElementById('pomo-pause');
+  var resetBtn = document.getElementById('pomo-reset');
+  var countEl = document.getElementById('pomo-count');
+  var modeBtns = document.querySelectorAll('.pomo-mode');
+
+  var totalSeconds = 25 * 60, remaining = totalSeconds, timer = null, sessions = 0;
+
+  function render() {
+    var m = Math.floor(remaining / 60), s = remaining % 60;
+    display.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function tick() {
+    if (remaining > 0) { remaining--; render(); }
+    else {
+      clearInterval(timer); timer = null;
+      sessions++; countEl.textContent = sessions;
+      startBtn.disabled = false; pauseBtn.disabled = true;
+      try { new AudioContext(); } catch (e) {}
+      alert('Time\'s up!');
+    }
+  }
+
+  startBtn.addEventListener('click', function () {
+    if (timer) return;
+    timer = setInterval(tick, 1000);
+    startBtn.disabled = true; pauseBtn.disabled = false;
+  });
+  pauseBtn.addEventListener('click', function () {
+    clearInterval(timer); timer = null;
+    startBtn.disabled = false; pauseBtn.disabled = true;
+  });
+  resetBtn.addEventListener('click', function () {
+    clearInterval(timer); timer = null;
+    remaining = totalSeconds; render();
+    startBtn.disabled = false; pauseBtn.disabled = true;
+  });
+  modeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      modeBtns.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      clearInterval(timer); timer = null;
+      totalSeconds = parseInt(btn.getAttribute('data-mins'), 10) * 60;
+      remaining = totalSeconds; render();
+      startBtn.disabled = false; pauseBtn.disabled = true;
+    });
+  });
+  render();
+})();
+</script>
