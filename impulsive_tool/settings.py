@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -144,3 +145,10 @@ SITE_DEVELOPER = 'Abhinav Tripathi'
 SITE_GITHUB = 'https://github.com/Abhinav8640'
 SITE_LINKEDIN = 'https://www.linkedin.com/in/abhinav-tripathi-80647a403/'
 SITE_CONTACT_EMAIL = 'officialabhinavtripathi@gmail.com'
+
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
